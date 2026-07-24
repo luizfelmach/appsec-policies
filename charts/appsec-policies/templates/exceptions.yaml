@@ -1,0 +1,19 @@
+{{- $root := . -}}
+{{- range $policy := .Values.policies }}
+{{- range $exception := default (list) $policy.exceptions }}
+---
+apiVersion: openappsec.io/v1beta2
+kind: Exception
+metadata:
+  name: {{ printf "%s-%s" $policy.name $exception.name }}
+  labels:
+    {{- include "appsec-policies.labels" $root | nindent 4 }}
+spec:
+  {{- if $root.Values.appsecClassName }}
+  appsecClassName: {{ $root.Values.appsecClassName | quote }}
+  {{- end }}
+  action: {{ $exception.action }}
+  condition:
+    {{- toYaml $exception.conditions | nindent 4 }}
+{{- end }}
+{{- end }}

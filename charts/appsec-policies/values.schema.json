@@ -1,0 +1,107 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "appsecClassName": { "type": "string" },
+    "installCRDs": { "type": "boolean" },
+    "defaults": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "trigger",
+        "customResponse",
+        "threatPrevention",
+        "accessControl",
+        "sourceIdentifier",
+        "trustedSource"
+      ],
+      "properties": {
+        "trigger": { "$ref": "#/definitions/resource" },
+        "customResponse": { "$ref": "#/definitions/resource" },
+        "threatPrevention": { "$ref": "#/definitions/resource" },
+        "accessControl": { "$ref": "#/definitions/resource" },
+        "sourceIdentifier": { "$ref": "#/definitions/resource" },
+        "trustedSource": { "$ref": "#/definitions/trustedSource" }
+      }
+    },
+    "policies": {
+      "type": "array",
+      "items": { "$ref": "#/definitions/policy" }
+    }
+  },
+  "required": ["installCRDs", "defaults", "policies"],
+  "definitions": {
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 63,
+      "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$"
+    },
+    "resource": {
+      "type": "object"
+    },
+    "trustedSource": {
+      "type": "object",
+      "not": { "required": ["sourcesIdentifiers"] }
+    },
+    "condition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["key", "value"],
+      "properties": {
+        "key": { "type": "string", "minLength": 1 },
+        "value": { "type": "string" }
+      }
+    },
+    "exception": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "host", "action", "conditions"],
+      "properties": {
+        "name": { "$ref": "#/definitions/name" },
+        "host": {
+          "type": "string",
+          "minLength": 1,
+          "not": { "pattern": "^https?://" }
+        },
+        "action": {
+          "type": "string",
+          "enum": ["skip", "accept", "drop", "suppressLog"]
+        },
+        "conditions": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/definitions/condition" }
+        }
+      }
+    },
+    "policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "host", "mode"],
+      "properties": {
+        "name": { "$ref": "#/definitions/name" },
+        "host": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9.-]+(?::[0-9]+)?$"
+        },
+        "mode": {
+          "type": "string",
+          "enum": ["prevent-learn", "detect-learn", "prevent", "detect", "inactive"]
+        },
+        "trigger": { "$ref": "#/definitions/resource" },
+        "customResponse": { "$ref": "#/definitions/resource" },
+        "threatPrevention": { "$ref": "#/definitions/resource" },
+        "accessControl": { "$ref": "#/definitions/resource" },
+        "sourceIdentifier": { "$ref": "#/definitions/resource" },
+        "trustedSource": { "$ref": "#/definitions/trustedSource" },
+        "exceptions": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/exception" }
+        }
+      }
+    }
+  }
+}

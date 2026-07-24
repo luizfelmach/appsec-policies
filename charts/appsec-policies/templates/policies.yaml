@@ -1,0 +1,45 @@
+{{- $root := . -}}
+{{- range $policy := .Values.policies }}
+{{- $threatPreventionName := printf "%s-threat-prevention" $policy.name -}}
+{{- $accessControlName := printf "%s-access-control" $policy.name -}}
+{{- $triggerName := printf "%s-trigger" $policy.name -}}
+{{- $customResponseName := printf "%s-custom-response" $policy.name -}}
+{{- $sourceIdentifierName := printf "%s-source-identifier" $policy.name -}}
+{{- $trustedSourceName := printf "%s-trusted-source" $policy.name -}}
+---
+apiVersion: openappsec.io/v1beta2
+kind: Policy
+metadata:
+  name: {{ $policy.name }}
+  labels:
+    {{- include "appsec-policies.labels" $root | nindent 4 }}
+spec:
+  {{- if $root.Values.appsecClassName }}
+  appsecClassName: {{ $root.Values.appsecClassName | quote }}
+  {{- end }}
+  default:
+    mode: {{ $policy.mode }}
+    threatPreventionPractices:
+      - {{ $threatPreventionName }}
+    accessControlPractices:
+      - {{ $accessControlName }}
+    triggers:
+      - {{ $triggerName }}
+    customResponse: {{ $customResponseName }}
+    sourceIdentifiers: {{ $sourceIdentifierName }}
+    trustedSources: {{ $trustedSourceName }}
+  {{- with $policy.exceptions }}
+  specificRules:
+    {{- range $exception := . }}
+    - name: {{ $exception.name }}
+      host: {{ $exception.host | quote }}
+      mode: {{ $policy.mode }}
+      threatPreventionPractices:
+        - {{ $threatPreventionName }}
+      accessControlPractices:
+        - {{ $accessControlName }}
+      exceptions:
+        - {{ printf "%s-%s" $policy.name $exception.name }}
+    {{- end }}
+  {{- end }}
+{{- end }}

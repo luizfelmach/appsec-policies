@@ -1,0 +1,19 @@
+{{- $root := . -}}
+{{- range $policy := .Values.policies }}
+---
+apiVersion: openappsec.io/v1beta2
+kind: PolicyActivation
+metadata:
+  name: {{ $policy.name }}
+  labels:
+    {{- include "appsec-policies.labels" $root | nindent 4 }}
+spec:
+  {{- if $root.Values.appsecClassName }}
+  appsecClassName: {{ $root.Values.appsecClassName | quote }}
+  {{- end }}
+  enabledPolicies:
+    - name: {{ $policy.name }}
+      hosts:
+        - {{ printf "http://%s" $policy.host | quote }}
+        - {{ printf "https://%s" $policy.host | quote }}
+{{- end }}

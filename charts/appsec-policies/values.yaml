@@ -1,0 +1,79 @@
+appsecClassName: ""
+installCRDs: true
+
+defaults:
+  trigger:
+    accessControlLogging:
+      allowEvents: false
+      dropEvents: true
+    appsecLogging:
+      detectEvents: true
+      preventEvents: true
+      allWebRequests: false
+    extendedLogging:
+      urlPath: true
+      urlQuery: true
+      httpHeaders: true
+      requestBody: false
+    additionalSuspiciousEventsLogging:
+      enabled: true
+      minSeverity: high
+      responseBody: false
+      responseCode: true
+    logDestination:
+      cloud: true
+      logToAgent: true
+      stdout:
+        format: json
+  customResponse:
+    mode: response-code-only
+    httpResponseCode: 403
+  threatPrevention:
+    practiceMode: inherited
+    webAttacks:
+      overrideMode: inherited
+      minimumConfidence: critical
+      protections:
+        csrfProtection: inherited
+        errorDisclosure: inherited
+        openRedirect: inherited
+        nonValidHttpMethods: true
+    intrusionPrevention:
+      overrideMode: inherited
+      maxPerformanceImpact: high
+      minSeverityLevel: low
+      minCveYear: 2014
+      highConfidenceEventAction: inherited
+      mediumConfidenceEventAction: inherited
+      lowConfidenceEventAction: inherited
+    fileSecurity:
+      overrideMode: inherited
+      minSeverityLevel: low
+      highConfidenceEventAction: inherited
+      mediumConfidenceEventAction: inherited
+      lowConfidenceEventAction: inherited
+    snortSignatures:
+      overrideMode: inherited
+      configmap: []
+      files: []
+    schemaValidation:
+      overrideMode: inherited
+      configmap: []
+      files: []
+    antiBot:
+      overrideMode: inherited
+      injectedUris: []
+      validatedUris: []
+  accessControl:
+    practiceMode: inherited
+    rateLimit:
+      overrideMode: inherited
+      rules: []
+  sourceIdentifier:
+    sourcesIdentifiers:
+      - identifier: sourceip
+        value: []
+  trustedSource:
+    minNumOfSources: 3
+
+policies: []

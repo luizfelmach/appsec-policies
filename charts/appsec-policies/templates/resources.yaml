@@ -1,0 +1,30 @@
+{{- $root := . -}}
+{{- range $policy := .Values.policies }}
+{{- $resources := list
+  (dict "field" "trigger" "kind" "LogTrigger" "suffix" "trigger")
+  (dict "field" "customResponse" "kind" "CustomResponse" "suffix" "custom-response")
+  (dict "field" "threatPrevention" "kind" "ThreatPreventionPractice" "suffix" "threat-prevention")
+  (dict "field" "accessControl" "kind" "AccessControlPractice" "suffix" "access-control")
+  (dict "field" "sourceIdentifier" "kind" "SourcesIdentifier" "suffix" "source-identifier")
+  (dict "field" "trustedSource" "kind" "TrustedSource" "suffix" "trusted-source")
+-}}
+{{- range $resource := $resources }}
+{{- $override := default (dict) (index $policy $resource.field) -}}
+{{- $spec := mergeOverwrite (deepCopy (index $root.Values.defaults $resource.field)) (deepCopy $override) -}}
+{{- if eq $resource.field "trustedSource" -}}
+{{- $_ := set $spec "sourcesIdentifiers" (list (printf "%s-source-identifier" $policy.name)) -}}
+{{- end }}
+---
+apiVersion: openappsec.io/v1beta2
+kind: {{ $resource.kind }}
+metadata:
+  name: {{ printf "%s-%s" $policy.name $resource.suffix }}
+  labels:
+    {{- include "appsec-policies.labels" $root | nindent 4 }}
+spec:
+  {{- if $root.Values.appsecClassName }}
+  appsecClassName: {{ $root.Values.appsecClassName | quote }}
+  {{- end }}
+  {{- toYaml $spec | nindent 2 }}
+{{- end }}
+{{- end }}
