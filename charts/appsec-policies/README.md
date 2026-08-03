@@ -5,11 +5,11 @@ Helm chart for generating open-appsec `v1beta2` policies and their supporting re
 ## Installation
 
 ```bash
-helm repo add appsec-charts \
-  https://raw.githubusercontent.com/luizfelmach/appsec-lab/gh-pages
+helm repo add appsec-policies \
+  https://luizfelmach.github.io/appsec-policies
 helm repo update
 
-helm upgrade --install appsec-policies appsec-charts/appsec-policies \
+helm upgrade --install appsec-policies appsec-policies/appsec-policies \
   --values my-values.yaml
 ```
 
