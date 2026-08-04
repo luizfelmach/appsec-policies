@@ -3,6 +3,16 @@ entries:
   appsec-policies:
   - apiVersion: v2
     appVersion: "1.1"
+    created: "2026-08-04T19:38:14.823059311Z"
+    description: Declarative open-appsec v1beta2 policies and supporting resources
+    digest: 5bddb82635182509688223c5aba062d287bbdba672ac04a27409ebe48cad4acb
+    name: appsec-policies
+    type: application
+    urls:
+    - https://github.com/luizfelmach/appsec-policies/releases/download/appsec-policies-0.1.3/appsec-policies-0.1.3.tgz
+    version: 0.1.3
+  - apiVersion: v2
+    appVersion: "1.1"
     created: "2026-08-04T19:08:22.746281347Z"
     description: Declarative open-appsec v1beta2 policies and supporting resources
     digest: 421e2bc587f31bd9e8ef732f1bcaf5dcb10733427796b26a104e4c7f9c805a15
@@ -21,4 +31,4 @@ entries:
     urls:
     - https://github.com/luizfelmach/appsec-policies/releases/download/appsec-policies-0.1.1/appsec-policies-0.1.1.tgz
     version: 0.1.1
-generated: "2026-08-04T19:08:22.746290344Z"
+generated: "2026-08-04T19:38:14.823074483Z"
