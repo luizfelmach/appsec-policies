@@ -7,15 +7,8 @@ setup() {
 
 @test "rate limiting blocks fourth request" {
   for _ in 1 2 3; do
-    run http_status --header "X-Forwarded-For: $source_ip" \
-      'http://rate-limit.localtest.me/rate'
-    [ "$status" -eq 0 ]
-    [ "$output" = '200' ]
+    expect 200 --header "X-Forwarded-For: $source_ip" 'http://rate-limit.localtest.me/rate'
   done
 
-  run http_status --header "X-Forwarded-For: $source_ip" \
-    'http://rate-limit.localtest.me/rate'
-
-  [ "$status" -eq 0 ]
-  [ "$output" = '403' ]
+  expect 403 --header "X-Forwarded-For: $source_ip" 'http://rate-limit.localtest.me/rate'
 }
