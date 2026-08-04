@@ -2,3 +2,7 @@ policies:
   - name: prevent
     host: prevent.localtest.me
     mode: prevent
+
+  - name: detect
+    host: detect.localtest.me
+    mode: detect

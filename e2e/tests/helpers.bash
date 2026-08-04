@@ -3,7 +3,8 @@ request() {
 
   run curl --silent --show-error --globoff --output "$body_file" \
     --write-out '%{http_code}' --max-time 20 --noproxy '*' \
-    --resolve 'prevent.localtest.me:80:127.0.0.1' "$@"
+    --resolve 'prevent.localtest.me:80:127.0.0.1' \
+    --resolve 'detect.localtest.me:80:127.0.0.1' "$@"
 
   curl_status="$status"
   http_status="$output"

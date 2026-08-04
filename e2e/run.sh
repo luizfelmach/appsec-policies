@@ -63,4 +63,20 @@ if [[ "$status" != "403" ]]; then
   exit 1
 fi
 
+printf 'Waiting for detect policy to load...\n'
+for _ in $(seq 1 60); do
+  status=$(curl --silent --output /dev/null --write-out '%{http_code}' \
+    --max-time 2 --noproxy '*' \
+    'http://detect.localtest.me/?q=%3Cscript%3Ealert%281%29%3C%2Fscript%3E' || true)
+  if [[ "$status" == "200" ]]; then
+    break
+  fi
+  sleep 2
+done
+
+if [[ "$status" != "200" ]]; then
+  printf 'Detect policy did not load before timeout. Last status: %s\n' "$status" >&2
+  exit 1
+fi
+
 bats "$E2E_DIR/tests"

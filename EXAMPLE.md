@@ -30,6 +30,8 @@ Current scenarios use separate hosts:
 - `prevent.localtest.me` validates benign traffic and prevention across query strings,
   paths, form, JSON, XML, headers, and cookies. Attack coverage includes XSS, SQL
   injection, command injection, path traversal, XXE, and non-standard HTTP methods.
+- `detect.localtest.me` validates the same benign and malicious matrix in detect mode,
+  where requests reach the backend instead of being blocked.
 
 The E2E setup intentionally installs the latest `open-appsec-kong` chart. Detection
 behavior can change between upstream releases, so attack payloads may need adjustment
@@ -45,6 +47,12 @@ Run only the prevent matrix:
 
 ```bash
 bats e2e/tests/prevent.bats
+```
+
+Run only the detect matrix:
+
+```bash
+bats e2e/tests/detect.bats
 ```
 
 ## Inspect Resources
