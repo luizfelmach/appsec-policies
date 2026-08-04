@@ -95,8 +95,7 @@ workflow creates a GitHub Release and updates the Helm repository index on `gh-p
 
 ## Local Example
 
-See [`EXAMPLE.md`](EXAMPLE.md) for a complete local deployment using Kind, Kong,
-open-appsec, and the included automated test script.
+See [`EXAMPLE.md`](EXAMPLE.md) for E2E tests using Kind, Kong, open-appsec, and Bats.
 
 ## Uninstall
 
