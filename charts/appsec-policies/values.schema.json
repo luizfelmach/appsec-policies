@@ -4,7 +4,6 @@
   "additionalProperties": false,
   "properties": {
     "appsecClassName": { "type": "string" },
-    "installCRDs": { "type": "boolean" },
     "defaults": {
       "type": "object",
       "additionalProperties": false,
@@ -30,7 +29,7 @@
       "items": { "$ref": "#/definitions/policy" }
     }
   },
-  "required": ["installCRDs", "defaults", "policies"],
+  "required": ["defaults", "policies"],
   "definitions": {
     "name": {
       "type": "string",

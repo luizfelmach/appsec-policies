@@ -20,12 +20,11 @@ helm upgrade --install appsec-policies appsec-policies/appsec-policies \
 | Value | Type | Description |
 | --- | --- | --- |
 | `appsecClassName` | string | Optional open-appsec class assigned to every generated resource. |
-| `installCRDs` | boolean | Install required open-appsec CRDs. Defaults to `true`. |
 | `defaults` | object | Base specifications for supporting resources. |
 | `policies` | array | Hosts and policy-specific overrides. |
 
-Set `installCRDs: false` when the CRDs are managed by another release or deployment
-process.
+Helm installs CRDs from `crds/` before templates. Use `--skip-crds` when another
+release or deployment process manages them. Helm does not upgrade or delete CRDs.
 
 ### Resource defaults
 

@@ -1,5 +1,4 @@
 appsecClassName: ""
-installCRDs: true
 
 defaults:
   trigger:

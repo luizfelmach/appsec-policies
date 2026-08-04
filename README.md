@@ -68,8 +68,9 @@ policies:
 `policies[]` override the corresponding default. Maps merge recursively; scalar values
 and arrays from a policy replace their default values.
 
-The chart installs its CRDs when `installCRDs` is `true`, which is the default. Set it
-to `false` when CRDs are managed separately.
+Helm installs the required CRDs from the chart's `crds/` directory. Use
+`--skip-crds` when CRDs are managed separately. Helm does not upgrade or delete CRDs;
+apply CRD updates separately when upgrading the chart.
 
 Generated resources use deterministic names such as `api-threat-prevention` and
 `api-access-control`. `TrustedSource` automatically references the generated
