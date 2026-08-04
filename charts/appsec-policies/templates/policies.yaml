@@ -42,4 +42,4 @@ spec:
         - {{ printf "%s-%s" $policy.name $exception.name }}
     {{- end }}
   {{- end }}
-{{- end }}
+{{ end }}
