@@ -28,7 +28,6 @@ Hosts under `localtest.me` resolve to `127.0.0.1`; no hosts file change is requi
 Current scenarios use separate hosts:
 
 - `prevent.localtest.me` validates normal traffic and XSS prevention.
-- `rate-limit.localtest.me` validates rate limiting without sharing traffic with prevent.
 
 Run only tests against an already provisioned cluster:
 

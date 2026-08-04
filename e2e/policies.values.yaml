@@ -2,15 +2,3 @@ policies:
   - name: prevent
     host: prevent.localtest.me
     mode: prevent
-
-  - name: rate-limit
-    host: rate-limit.localtest.me
-    mode: prevent
-    accessControl:
-      rateLimit:
-        overrideMode: prevent
-        rules:
-          - action: inherited
-            uri: /rate
-            limit: 3
-            unit: minute
